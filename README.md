@@ -1,8 +1,8 @@
 # OpenDialog Local Development
 
-This package helps you get setup quickly for local development and can also be used to deploy OpenDialog in a single virtual machine online for testing purposes. 
+This package helps you get setup for local development using Docker. It could also be user to inform deployment of OpenDialog on an online virtual machine. 
 
-This is a template created from the [Laradock](https://laradock.io) project with all unnecessary parts removed.
+This template is based on the [Laradock](https://laradock.io) project with (most) unnecessary components removed. 
 
 It allows you to spin up OpenDialog using pre-made docker images from Laradock along with the standard [Dgraph](https://dgraph.io) image.
 
@@ -66,7 +66,7 @@ You are now ready to setup OpenDialog itself.
 in `/var/www/opendialog`:
 
 * run `composer install`
-* run `cp .env.example .env; php artisan key:generate`
+* run `cp .env.example .env; php artisan key:generate;`
 * Edit .env file and configure the app name, URL and DB settings
     * Use the database credentials you defined above.
     * Use 'mysql' for MySQL host
@@ -76,9 +76,43 @@ in `/var/www/opendialog`:
 * run `bash update-web-chat.sh -iy` to build the webchat widget for interacting with the bot
 * run `php artisan webchat:setup` to setup default values for webchat
 * run `php artisan conversations:setup` to setup default conversations
-* run `yarn add` and `yarn run dev` to setup the admin interface
+* run `yarn install` and `yarn run dev` to setup the admin interface
 
-## Testing 
+
+### Confirm OpenDialog works
+
+To ensure that it is all working visit http://opendialog.test, you should see the OpenDialog welcome screen and be able to login with the user you created. If you visit http://opendialog.test/admin/demo the bot should load in the page and give you the default welcome message.
+
+### Confirm Dgraph works
+
+To ensure that Dgraph is working visit http://opendialog.test:9001/?latest and point it to od-demo.test:8080
+
+You should be able to use the console to run queries such as:
+
+`{
+  node(func: eq(ei_type,"conversation_template")) {
+    uid
+    expand(_all_)
+  }
+}`
+
+
+## Working on OpenDialog Core and Webchat
+
+The OpenDialog application is a Laravel application that makes use of [OpenDialog Core](https://github.com/opendialogai/core) and [OpenDialog Webchat](https://github.com/opendialogai/webchat) where a lot of the key functionality is present. If you want to work on those packages locally and checkout their git repositories you can use the following command:
+`php artisan packages:install`
+
+## Automated testing
+
+To run automated tests with PHPUnit first ensure that phpunit.xml has the correct information for connecting to Dgraph.
+
+`
+<env name="DGRAPH_URL" value="server"/>
+<env name="DGRAPH_PORT" value="8080"/>
+`
+
+You can then run `phpunit`
+
 
 
 
