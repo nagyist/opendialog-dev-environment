@@ -9,7 +9,7 @@ server {
     # ssl_certificate /etc/nginx/ssl/default.crt;
     # ssl_certificate_key /etc/nginx/ssl/default.key;
 
-    server_name avaya.test;
+    server_name opendialog.test;
     root /var/www/opendialog/public;
     index index.php index.html index.htm;
 
