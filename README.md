@@ -61,7 +61,7 @@ You are now ready to setup OpenDialog itself.
 
 ## Setting up OpenDialog
 
-+ Connect to the workspace container as described above and run the following scripts to set the application up:
++ Connect to the workspace container as described above and run the following commands to set the application up:
 
 in `/var/www/opendialog`:
 
@@ -112,6 +112,8 @@ To run automated tests with PHPUnit first ensure that phpunit.xml has the correc
 `
 
 You can then run `phpunit`
+
+Keep in mind that this will use the same Dgraph instance used by the application so will likely be destructive to data within dgraph - we will update this setup to include a separate Dgraph instsance just for tests. 
 
 
 
