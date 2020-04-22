@@ -1,10 +1,6 @@
 # OpenDialog Local Development
 
-This package helps you get setup for local development using Docker. It could also be user to inform deployment of OpenDialog on an online virtual machine. 
-
-This template is based on the [Laradock](https://laradock.io) project with (most) unnecessary components removed. 
-
-It allows you to spin up OpenDialog using pre-made docker images from Laradock along with the standard [Dgraph](https://dgraph.io) image.
+This package helps you get setup for local development using Docker. It is based on the [Laradock](https://laradock.io) project with (most) unnecessary components removed and allows you to spin up OpenDialog using pre-made docker images from Laradock, the standard [Dgraph](https://dgraph.io) images and the OpenDialog source code.
 
 We first walk through setting up the Docker environment and then setting up OpenDialog within that environment. 
 
@@ -89,12 +85,12 @@ To ensure that Dgraph is working visit http://opendialog.test:9001/?latest and p
 
 You should be able to use the console to run queries such as:
 
-`{
+``{
   node(func: eq(ei_type,"conversation_template")) {
     uid
     expand(_all_)
   }
-}`
+}``
 
 
 ## Working on OpenDialog Core and Webchat
