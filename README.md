@@ -109,7 +109,7 @@ To run automated tests with PHPUnit first ensure that phpunit.xml has the correc
 
 You can then run `phpunit`
 
-Keep in mind that this will use the same Dgraph instance used by the application so will likely be destructive to data within dgraph - we will update this setup to include a separate Dgraph instsance just for tests. 
+Keep in mind that this uses a separate Dgraph instance so it will not be changing any data that the application itself is using.  
 
 
 
