@@ -44,13 +44,13 @@ From withing opendialog-deploy start all the containers with:
     
     `docker-compose up -d`
 
-Please note that if you have another OpenDialog application up and running you may need to stop those containeds in order to avoid port clashing.     
+Please note that if you have another OpenDialog application up and running you may need to stop those containers in order to avoid port clashing.     
     
-This will start all containers including `workspace` and `dgraph ratel` which are not needed for production deploys. To run just the required containers, run
+This will start all containers including `workspace`,  `dgraph ratel`, `dgraph-zero-test` and `dgraph-server-test` which are not needed to just test an application. To run just the required containers, run
 
-    `docker-compose up -d php-fpm mysql nginx zero server memcached`
+    `docker-compose up -d php-fpm mysql nginx dgrah-zero dgrarh-server memcached`
 
-Connect to the workspace container to run scripts with:
+To connect to the workspace container to run scripts use:
 `docker-compose exec workspace bash`.
 
 You are now ready to setup OpenDialog itself.
@@ -66,7 +66,7 @@ in `/var/www/opendialog`:
 * Edit .env file and configure the app name, URL and DB settings
     * Use the database credentials you defined above.
     * Use 'mysql' for MySQL host
-    * Use `server` for the DGraph host
+    * Use `dgraph-server` for the DGraph host
 * run `php artisan migrate` to setup tables
 * run `php artisan user:create` to create a user
 * run `bash update-web-chat.sh -iy` to build the webchat widget for interacting with the bot
@@ -103,8 +103,8 @@ The OpenDialog application is a Laravel application that makes use of [OpenDialo
 To run automated tests with PHPUnit first ensure that phpunit.xml has the correct information for connecting to Dgraph.
 
 `
-<env name="DGRAPH_URL" value="server"/>
-<env name="DGRAPH_PORT" value="8080"/>
+<env name="DGRAPH_URL" value="dgraph-server-test"/>
+<env name="DGRAPH_PORT" value="8082"/>
 `
 
 You can then run `phpunit`
