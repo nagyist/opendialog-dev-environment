@@ -111,6 +111,28 @@ You can then run `phpunit`
 
 Keep in mind that this uses a separate Dgraph instance so it will not be changing any data that the application itself is using.  
 
+## Setting up xDebug
+
+- Open the .env file, search for `WORKSPACE_INSTALL_XDEBUG` and set it to `true`
+- Still in .env, search for `PHP_FPM_INSTALL_XDEBUG` and set that to `true`
+- Rebuild the containers with `docker-compose build workspace php-fpm`
+
+
+## Configuring PHPStorm
+
+The OpenDialog team is primarily on PhpStorm but these instructions should give you a sense of what is required for any similar IDE.
+
+- In Preferences > Languages & Frameworks > PHP next to the CLI Interpreter drop-down click on the three dotted lines to add a new interpreter.
+- Click on + and select "From Docker, Vagrant, VM Remote"
+- In the "Configure Remote PHP Interpreter pop-up select Docker Compose"
+- Then add the Docker Compose configuration file that is in opendialog-deploy.
+- PhpStorm will automatically pick-up the available services, select `workspace` from the drop-down. Confirm to close the pop-up.
+- In CLI Interpreters next to "php executable" click the reload phpinfo button. If that is succesfully retrieves the phpinfo you are one step closer.
+- Confirm the interpreter and in the following page add path mappings from whatever your local path is to the root of the OpenDialog application to `/var/www/opendialog/`.
+- Next go to Preferences > Languages & Frameworks > PHP > Test Frameworks and add 'PHPUnit by Remote Interpreter' and select the `workspace` interpreter.
+- Make sure that "Use Composer Autoloader" is selected and add `/var/www/opendialog/vendor/autoload.php` as the path to script.
+
+
 
 
 
