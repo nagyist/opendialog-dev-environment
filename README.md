@@ -131,6 +131,7 @@ The OpenDialog team is primarily on PhpStorm but these instructions should give 
 - Confirm the interpreter and in the following page add path mappings from whatever your local path is to the root of the OpenDialog application to `/var/www/opendialog/`.
 - Next go to Preferences > Languages & Frameworks > PHP > Test Frameworks and add 'PHPUnit by Remote Interpreter' and select the `workspace` interpreter.
 - Make sure that "Use Composer Autoloader" is selected and add `/var/www/opendialog/vendor/autoload.php` as the path to script.
+- Hit Refresh next to the "Path to Script" field. If it correctly identifies the PHPUnit version installed you should be good to go. 
 
 
 
