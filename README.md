@@ -81,7 +81,7 @@ To ensure that it is all working visit http://opendialog.test, you should see th
 
 ### Confirm Dgraph works
 
-To ensure that Dgraph is working visit http://opendialog.test:9001/?latest and point it to od-demo.test:8080
+To ensure that Dgraph is working visit http://opendialog.test:9001/?latest and point it to http://opendialog.test:8080
 
 You should be able to use the console to run queries such as:
 
@@ -132,6 +132,39 @@ The OpenDialog team is primarily on PhpStorm but these instructions should give 
 - Next go to Preferences > Languages & Frameworks > PHP > Test Frameworks and add 'PHPUnit by Remote Interpreter' and select the `workspace` interpreter.
 - Make sure that "Use Composer Autoloader" is selected and add `/var/www/opendialog/vendor/autoload.php` as the path to script.
 
+## Local Package Development
+
+The `packages:install` artisan command will checkout and symlink `opendialog-core` and / or `opendialog-webchat` to a `vendor-local` directory.
+
+To install dependencies using it, you can run `artisan packages:install`. You will be asked if you want to use local versions of core and webchat.
+If so, you can now use, edit and version control these repositories directly from your `vendor-local` directory.
+
+After doing so, you may need to run `php artisan package:discover` to pick up any new modules.
+
+Note:
+Before a final commit for a feature / fix, please be sure to run `composer update` to update the `composer-lock.json` file so that it can be tested and deployed with all composer changes in place
+
+### Reverting
+
+To revert back to the dependencies defined in `composer.json`, run the `artisan packages:install` command again and answer no to installing core and webchat locally.
+
+## Running Code Sniffer
+To run code sniffer, run the following command
+```./vendor/bin/phpcs --standard=od-cs-ruleset.xml app/ --ignore=*/migrations/*,*/tests/*```
+
+## Git Hooks
+
+To set up the included git pre-commit hook, first make sure the pre-commit script is executable by running
+
+```chmod +x .githooks/pre-commit```
+
+Then configure your local git to use this directory for git hooks by running:
+
+```git config core.hooksPath .githooks/```
+
+Now every commit you make will trigger php codesniffer to run. If there is a problem with the formatting
+of the code, the script will echo the output of php codesniffer. If there are no issues, the commit will
+go into git.
 
 
 
