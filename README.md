@@ -92,12 +92,6 @@ You should be able to use the console to run queries such as:
   }
 }``
 
-
-## Working on OpenDialog Core and Webchat
-
-The OpenDialog application is a Laravel application that makes use of [OpenDialog Core](https://github.com/opendialogai/core) and [OpenDialog Webchat](https://github.com/opendialogai/webchat) where a lot of the key functionality is present. If you want to work on those packages locally and checkout their git repositories you can use the following command:
-`php artisan packages:install`
-
 ## Automated testing
 
 To run automated tests with PHPUnit first ensure that phpunit.xml has the correct information for connecting to Dgraph.
