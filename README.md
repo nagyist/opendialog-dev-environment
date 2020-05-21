@@ -17,19 +17,19 @@ To deploy OpenDialog using this package run through the following steps:
 
 `git clone git@github.com:opendialogai/opendialog.git opendialog`
 
-+ Clone the OpenDialog Deploy package (i.e. this package), in a directory named `opendialog-deploy`.
++ Clone the OpenDialog Deploy package (i.e. this package), in a directory named `opendialog-development-environment`.
 
-`git clone git@github.com:opendialogai/opendialog-deploy.git`
+`git clone git@github.com:opendialogai/opendialog-dev-environment.git`
 
 + The folder structure should be (the names of the directories are important, if you change them to match your project name please follow through in all the other parts mentioned in this doc):
     
   ```
      + od-app
      ++ opendialog
-     ++ opendialog-deploy
+     ++ opendialog-development-environment
    ```
 
-+ Create a copy of `opendialog-deploy/nginx/sites/opendialog.conf.example` in the same directory, and create `opendialog.conf` (or your own app name). This is your new vhost file, that handles nginx config. 
++ Create a copy of `opendialog-development-environment/nginx/sites/opendialog.conf.example` in the same directory, and create `opendialog.conf` (or your own app name). This is your new vhost file, that handles nginx config. 
   Make sure the `server_name` is using the URL you want to use locally and that `root` is pointing to the correct directory (the `public` directory of the OpenDialog application cloned from GitHub). If you are not changing any of the defaults no change is required. 
 + Add the server name that you defined in the nginx configuration to /etc/hosts (e.g. `127.0.0.1 opendialog.test` )
 + Copy `env.example` to `.env`.
@@ -40,7 +40,7 @@ To deploy OpenDialog using this package run through the following steps:
 
 ### Starting up the environment
 
-From withing opendialog-deploy start all the containers with:
+From withing opendialog-development-environment start all the containers with:
     
     `docker-compose up -d`
 
@@ -119,7 +119,7 @@ The OpenDialog team is primarily on PhpStorm but these instructions should give 
 - In Preferences > Languages & Frameworks > PHP next to the CLI Interpreter drop-down click on the three dotted lines to add a new interpreter.
 - Click on + and select "From Docker, Vagrant, VM Remote"
 - In the "Configure Remote PHP Interpreter pop-up select Docker Compose"
-- Then add the Docker Compose configuration file that is in opendialog-deploy.
+- Then add the Docker Compose configuration file that is in opendialog-development-environment.
 - PhpStorm will automatically pick-up the available services, select `workspace` from the drop-down. Confirm to close the pop-up.
 - In CLI Interpreters next to "php executable" click the reload phpinfo button. If that is succesfully retrieves the phpinfo you are one step closer.
 - Confirm the interpreter and in the following page add path mappings from whatever your local path is to the root of the OpenDialog application to `/var/www/opendialog/`.
