@@ -92,6 +92,28 @@ You should be able to use the console to run queries such as:
   }
 }``
 
+## Bundled Scripts
+
+This application comes bundled with some useful scripts in the `/scripts` directory. As much as possible, these should
+be used to perform commands as they will also deal with spinning up and down the requried containers.
+
+A brief description of each:
+
+`build-php.sh` - Rebuilds any containers that use PHP. Useful if you change php settings in `.env`
+`reload-nginx.sh` - Reload Nginx in the Nginx container. Use this is you have altered Nginx config
+`run-tests.sh` - Runs all phpunit tests for the associated application
+`ssh-nginx.sh` - SSH to the nginx container
+`ssh-workspace.sh` - SSH to the Workspace container
+`start.sh` - Starts only the containers needed to run the app. Will not start workspace or test containers
+`start-test-containers.sh` - Starts the containers needed for running tests
+`start-workspace.sh` - Starts only the workspace and related containers
+`stop-test-containers.sh` - Stops all test containers
+`stop-workspace.sh` - Stops the workspace container 
+`up-with-rebuild.sh` - Spins rebuilds and starts the core containers 
+`update-conversations.sh` - Makes sure the right containers are running and installs the newest OD conversations
+`update-opendialog.sh` - Installs the latest composer and node requirements on the project as well as the webchat component
+`update-webchat-settings.sh` - Updates the webchat settings based on the artisan command
+
 ## Automated testing
 
 To run automated tests with PHPUnit first ensure that phpunit.xml has the correct information for connecting to Dgraph.
@@ -101,9 +123,13 @@ To run automated tests with PHPUnit first ensure that phpunit.xml has the correc
 <env name="DGRAPH_PORT" value="8082"/>
 `
 
-You can then run `phpunit`
+Test suites run against 2 test DGraph containers `dgraph-zero-test` and `dgraph-server-test` and these must be running
+before you can run tests. Keep in mind that this is a separate Dgraph instance, so it will not be changing any data that
+the application itself is using.  
 
-Keep in mind that this uses a separate Dgraph instance so it will not be changing any data that the application itself is using.  
+You can spin up the required containers, run the tests and then spin them down again by running
+
+        bash scripts/run-tests.sh
 
 ## Setting up xDebug
 
