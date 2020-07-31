@@ -38,6 +38,10 @@ To deploy OpenDialog using this package run through the following steps:
 + Set `MYSQL_ROOT_PASSWORD` and `MYSQL_PASSWORD` to appropriate values (you will use this when setting up OpenDialog itself as well)
 + If you change the value of `MYSQL_USER`, update the user in `mysql/docker-entrypoint-initdb.d/createdb.sql`
 
+## Selecting data
+
+In your copy of `.env` you can set `CHOSEN_DATABASE` to be `mysql` or `postgres`. This will affect which images are spun up by the scripts
+
 ### Starting up the environment
 
 From withing opendialog-development-environment start all the containers with:
@@ -48,10 +52,12 @@ Please note that if you have another OpenDialog application up and running you m
     
 This will start all containers including `workspace`,  `dgraph ratel`, `dgraph-zero-test` and `dgraph-server-test` which are not needed to just test an application. To run just the required containers, run
 
-    `docker-compose up -d php-fpm mysql nginx dgrah-zero dgrarh-server memcached`
+    `bash scripts/start.sh`
 
 To connect to the workspace container to run scripts use:
-`docker-compose exec workspace bash`.
+`bash scripts/ssh-workspace`
+
+This will start up the workspace container for you to work in and then close it when you exit
 
 You are now ready to setup OpenDialog itself.
 
