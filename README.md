@@ -104,20 +104,20 @@ be used to perform commands as they will also deal with spinning up and down the
 
 A brief description of each:
 
-`build-php.sh` - Rebuilds any containers that use PHP. Useful if you change php settings in `.env`
-`reload-nginx.sh` - Reload Nginx in the Nginx container. Use this is you have altered Nginx config
-`run-tests.sh` - Runs all phpunit tests for the associated application
-`ssh-nginx.sh` - SSH to the nginx container
-`ssh-workspace.sh` - SSH to the Workspace container
-`start.sh` - Starts only the containers needed to run the app. Will not start workspace or test containers
-`start-test-containers.sh` - Starts the containers needed for running tests
-`start-workspace.sh` - Starts only the workspace and related containers
-`stop-test-containers.sh` - Stops all test containers
-`stop-workspace.sh` - Stops the workspace container 
-`up-with-rebuild.sh` - Spins rebuilds and starts the core containers 
-`update-conversations.sh` - Makes sure the right containers are running and installs the newest OD conversations
-`update-opendialog.sh` - Installs the latest composer and node requirements on the project as well as the webchat component
-`update-webchat-settings.sh` - Updates the webchat settings based on the artisan command
+* `build-php.sh` - Rebuilds any containers that use PHP. Useful if you change php settings in `.env`
+* `reload-nginx.sh` - Reload Nginx in the Nginx container. Use this is you have altered Nginx config
+* `run-tests.sh` - Runs all phpunit tests for the associated application
+* `ssh-nginx.sh` - SSH to the nginx container
+* `ssh-workspace.sh` - SSH to the Workspace container
+* `start.sh` - Starts only the containers needed to run the app. Will not start workspace or test containers
+* `start-test-containers.sh` - Starts the containers needed for running tests
+* `start-workspace.sh` - Starts only the workspace and related containers
+* `stop-test-containers.sh` - Stops all test containers
+* `stop-workspace.sh` - Stops the workspace container 
+* `up-with-rebuild.sh` - Spins rebuilds and starts the core containers 
+* `update-conversations.sh` - Makes sure the right containers are running and installs the newest OD conversations
+* `update-opendialog.sh` - Installs the latest composer and node requirements on the project as well as the webchat component
+* `update-webchat-settings.sh` - Updates the webchat settings based on the artisan command
 
 ## Automated testing
 
