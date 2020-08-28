@@ -17,7 +17,7 @@ To deploy OpenDialog using this package run through the following steps:
 
 `git clone git@github.com:opendialogai/opendialog.git opendialog`
 
-+ Clone the OpenDialog Deploy package (i.e. this package), in a directory named `opendialog-development-environment`.
++ Clone the OpenDialog Deploy package (i.e. this package), in a directory named `opendialog-dev-environment`.
 
 `git clone git@github.com:opendialogai/opendialog-dev-environment.git`
 
@@ -26,31 +26,30 @@ To deploy OpenDialog using this package run through the following steps:
   ```
      + od-app
      ++ opendialog
-     ++ opendialog-development-environment
+     ++ opendialog-dev-environment
    ```
 
-+ Create a copy of `opendialog-development-environment/nginx/sites/opendialog.conf.example` in the same directory, and create `opendialog.conf` (or your own app name). This is your new vhost file, that handles nginx config. 
++ Create a copy of `opendialog-dev-environment/nginx/sites/opendialog.conf.example` in the same directory, and create `opendialog.conf` (or your own app name). This is your new vhost file, that handles nginx config. 
   Make sure the `server_name` is using the URL you want to use locally and that `root` is pointing to the correct directory (the `public` directory of the OpenDialog application cloned from GitHub). If you are not changing any of the defaults no change is required. 
 + Add the server name that you defined in the nginx configuration to /etc/hosts (e.g. `127.0.0.1 opendialog.test` )
-+ Copy `env.example` to `.env`.
-+ Change the `DATA_PATH_HOST` to `DATA_PATH_HOST=~/.laradock/opendialog/data` - this ensures that each application will have its own data directory so data will not be shared between multiple installations of OpenDialog apps. 
++ Withing the `opendialog-dev-environment` directory copy `env.example` to `.env`.
++ In `.env`, change the `DATA_PATH_HOST` to `DATA_PATH_HOST=~/.laradock/opendialog/data` - this ensures that each application will have its own data directory so data will not be shared between multiple installations of OpenDialog apps. 
 + Modify COMPOSE_PROJECT_NAME to match `opendialog` (or your own app name) - this ensures that you are using different containers for each OpenDialog application.
-+ Set `MYSQL_ROOT_PASSWORD` and `MYSQL_PASSWORD` to appropriate values (you will use this when setting up OpenDialog itself as well)
-+ If you change the value of `MYSQL_USER`, update the user in `mysql/docker-entrypoint-initdb.d/createdb.sql`
-
-## Selecting data
-
-In your copy of `.env` you can set `CHOSEN_DATABASE` to be `mysql` or `postgres`. This will affect which images are spun up by the scripts
++ In your copy of `.env` you can set `CHOSEN_DATABASE` to be `mysql` or `postgres`. This will affect which images are spun up by the scripts.
++ Set `MYSQL_ROOT_PASSWORD` and `MYSQL_PASSWORD`  (or the PostgreSQL values based on the DB choice) to appropriate values (you will use this when setting up OpenDialog itself as well)
++ If you change the value of `MYSQL_USER`, update the user in `mysql/docker-entrypoint-initdb.d/createdb.sql` (similarly for PostgreSQL)
 
 ### Starting up the environment
 
-From withing opendialog-development-environment start all the containers with:
+From within opendialog-dev-environment start all the containers with:
     
     `docker-compose up -d`
 
-Please note that if you have another OpenDialog application up and running you may need to stop those containers in order to avoid port clashing.     
+Please note that if you have another OpenDialog application (or other Docker containers in general) up and running you may need to stop those containers in order to avoid port clashing.     
     
-This will start all containers including `workspace`,  `dgraph ratel`, `dgraph-zero-test` and `dgraph-server-test` which are not needed to just test an application. To run just the required containers, run
+`docker-compose up -d` will start all containers including `workspace`,  `dgraph ratel`, `dgraph-zero-test` and `dgraph-server-test` which are not needed to just test an application. 
+
+To run just the required containers, run
 
     `bash scripts/start.sh`
 
