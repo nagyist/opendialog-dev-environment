@@ -79,7 +79,13 @@ in `/var/www/opendialog`:
 * run `php artisan webchat:setup` to setup default values for webchat
 * run `php artisan conversations:setup` to setup default conversations
 * run `yarn install` and `yarn run dev` to setup the admin interface
-
+* In `opendialog\app\Http\Middleware\VerifyCsrfToken` add the following URLs to be excluded from CSRF token matching.
+```    
+protected $except = [
+    '/incoming/webchat',
+    'webchat-config'
+];
+```
 
 ### Confirm OpenDialog works
 
