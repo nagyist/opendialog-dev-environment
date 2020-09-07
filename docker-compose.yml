@@ -290,7 +290,7 @@ services:
 
   ### DGraph for use by app ################################################
     dgraph-zero:
-      image: dgraph/dgraph:v1.1.0
+      image: dgraph/dgraph:${DGRAPH_VERSION}
       volumes:
         - ${DATA_PATH_HOST}/dgraph/zero:/dgraph
       ports:
@@ -304,7 +304,7 @@ services:
         - backend       
 
     dgraph-server:
-      image: dgraph/dgraph:v1.1.0
+      image: dgraph/dgraph:${DGRAPH_VERSION}
       volumes:
         - ${DATA_PATH_HOST}/dgraph/server:/dgraph
       ports:
@@ -317,7 +317,7 @@ services:
 
   ### Dgraph used for testing ################################################
     dgraph-zero-test:
-      image: dgraph/dgraph:v1.1.0
+      image: dgraph/dgraph:${DGRAPH_VERSION}
       command: dgraph zero --my=dgraph-zero-test:5082 -o=2
       links:
         - dgraph-server
@@ -325,14 +325,14 @@ services:
         - backend
 
     dgraph-server-test:
-      image: dgraph/dgraph:v1.1.0
+      image: dgraph/dgraph:${DGRAPH_VERSION}
       command: dgraph alpha --my=dgraph-server-test:7082 --lru_mb=2048 --zero=dgraph-zero-test:5082 -o=2
       networks:
         - backend
 
   ### Dgraph UI to inspect Dgraph data ################################################
     ratel:
-      image: dgraph/dgraph:v1.1.0
+      image: dgraph/dgraph:${DGRAPH_VERSION}
       ports:
         - 9001:8000
       command: dgraph-ratel
