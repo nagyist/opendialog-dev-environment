@@ -36,6 +36,7 @@ To deploy OpenDialog using this package run through the following steps:
 + In `.env`, change the `DATA_PATH_HOST` to `DATA_PATH_HOST=~/.laradock/opendialog/data` - this ensures that each application will have its own data directory so data will not be shared between multiple installations of OpenDialog apps. 
 + Modify COMPOSE_PROJECT_NAME to match `opendialog` (or your own app name) - this ensures that you are using different containers for each OpenDialog application.
 + In your copy of `.env` you can set `CHOSEN_DATABASE` to be `mysql` or `postgres`. This will affect which images are spun up by the scripts.
++ If you require a different version of DGraph for your project, update `DGRAPH_VERSION` in your copy of `.env` to the version you require
 + Set `MYSQL_ROOT_PASSWORD` and `MYSQL_PASSWORD`  (or the PostgreSQL values based on the DB choice) to appropriate values (you will use this when setting up OpenDialog itself as well)
 + If you change the value of `MYSQL_USER`, update the user in `mysql/docker-entrypoint-initdb.d/createdb.sql` (similarly for PostgreSQL)
 
