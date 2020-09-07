@@ -17,7 +17,7 @@ To deploy OpenDialog using this package run through the following steps:
 
 `git clone git@github.com:opendialogai/opendialog.git opendialog`
 
-+ Clone the OpenDialog Deploy package (i.e. this package), in a directory named `opendialog-dev-environment`.
++ Clone the OpenDialog Dev package (i.e. this package), in a directory named `opendialog-dev-environment`.
 
 `git clone git@github.com:opendialogai/opendialog-dev-environment.git`
 
