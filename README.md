@@ -113,7 +113,6 @@ A brief description of each:
 
 * `build-php.sh` - Rebuilds any containers that use PHP. Useful if you change php settings in `.env`
 * `reload-nginx.sh` - Reload Nginx in the Nginx container. Use this is you have altered Nginx config
-* `run-tests.sh` - Runs all phpunit tests for the associated application
 * `ssh-nginx.sh` - SSH to the nginx container
 * `ssh-workspace.sh` - SSH to the Workspace container
 * `start.sh` - Starts only the containers needed to run the app. Will not start workspace or test containers
@@ -139,9 +138,12 @@ Test suites run against 2 test DGraph containers `dgraph-zero-test` and `dgraph-
 before you can run tests. Keep in mind that this is a separate Dgraph instance, so it will not be changing any data that
 the application itself is using.  
 
-You can spin up the required containers, run the tests and then spin them down again by running
+You can spin up the required containers, login to the workspace environment and then run the tests 
 
-        bash scripts/run-tests.sh
+        bash scripts/start-test-containers.sh
+        bash scripts/ssh-workspace.sh
+        cd opendialog
+        phpunit
 
 ## Setting up xDebug
 
@@ -157,9 +159,9 @@ The OpenDialog team is primarily on PhpStorm but these instructions should give 
 - In Preferences > Languages & Frameworks > PHP next to the CLI Interpreter drop-down click on the three dotted lines to add a new interpreter.
 - Click on + and select "From Docker, Vagrant, VM Remote"
 - In the "Configure Remote PHP Interpreter pop-up select Docker Compose"
-- Then add the Docker Compose configuration file that is in opendialog-development-environment.
+- Then add the Docker Compose configuration file that is in opendialog-dev-environment.
 - PhpStorm will automatically pick-up the available services, select `workspace` from the drop-down. Confirm to close the pop-up.
-- In CLI Interpreters next to "php executable" click the reload phpinfo button. If that is succesfully retrieves the phpinfo you are one step closer.
+- In CLI Interpreters next to "php executable" click the reload phpinfo button. If that is succesfully retrieving the phpinfo you are one step closer.
 - Confirm the interpreter and in the following page add path mappings from whatever your local path is to the root of the OpenDialog application to `/var/www/opendialog/`.
 - Next go to Preferences > Languages & Frameworks > PHP > Test Frameworks and add 'PHPUnit by Remote Interpreter' and select the `workspace` interpreter.
 - Make sure that "Use Composer Autoloader" is selected and add `/var/www/opendialog/vendor/autoload.php` as the path to script.
