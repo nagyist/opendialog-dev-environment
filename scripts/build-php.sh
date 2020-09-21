@@ -4,5 +4,3 @@ cd ${DIR}/..
 
 echo "### Rebuilding containers that use PHP ###"
 docker-compose build workspace php-fpm
-
-bash ./up-with-rebuild.sh
