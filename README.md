@@ -167,7 +167,14 @@ The OpenDialog team is primarily on PhpStorm but these instructions should give 
 - Make sure that "Use Composer Autoloader" is selected and add `/var/www/opendialog/vendor/autoload.php` as the path to script.
 - Hit Refresh next to the "Path to Script" field. If it correctly identifies the PHPUnit version installed you should be good to go. 
 
+
+## Working on OpenDialog Core
+
+You can use this same environment to work on [OpenDialog Core](https://github.com/opendialogai/core) on its own. Clone the [core](https://github.com/opendialogai/core) repository within the `od-app` directory and you can access it through the `workspace` container to run tests. From an IDE perspective you could either setup a different PHPStorm environment to set the paths correctly or update your existing configurationt to match paths to the core repository. 
+
 ## Local Package Development
+
+If you want to work on Core or Webchat as repositories while they are used by the main OpenDialog application follow the instructions here. 
 
 The `packages:install` artisan command will checkout and symlink `opendialog-core` and / or `opendialog-webchat` to a `vendor-local` directory.
 
