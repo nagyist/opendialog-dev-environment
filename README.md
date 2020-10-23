@@ -13,7 +13,7 @@ To deploy OpenDialog using this package run through the following steps:
 + Create a directory called `od-app` (or whatever you prefer to call it, ensuring that any references of od-app in the documentation that follows is replaced by the name you chose).
 
 
-+ Clone the OpenDialog [appication](https://github.com/opendialogai/opendialog) in a directory called `opendialog` (or your own app name) within od-app.
++ Clone the OpenDialog [application](https://github.com/opendialogai/opendialog) in a directory called `opendialog` (or your own app name) within od-app.
 
 `git clone git@github.com:opendialogai/opendialog.git opendialog`
 
@@ -21,7 +21,7 @@ To deploy OpenDialog using this package run through the following steps:
 
 `git clone git@github.com:opendialogai/opendialog-dev-environment.git`
 
-+ The folder structure should be (the names of the directories are important, if you change them to match your project name please follow through in all the other parts mentioned in this doc):
++ The folder structure should resemble the example below (the names of the directories are important, if you change them to match your project name please follow through in all the other parts mentioned in this doc):
     
   ```
      + od-app
@@ -32,7 +32,7 @@ To deploy OpenDialog using this package run through the following steps:
 + Create a copy of `opendialog-dev-environment/nginx/sites/opendialog.conf.example` in the same directory, and create `opendialog.conf` (or your own app name). This is your new vhost file, that handles nginx config. 
   Make sure the `server_name` is using the URL you want to use locally and that `root` is pointing to the correct directory (the `public` directory of the OpenDialog application cloned from GitHub). If you are not changing any of the defaults no change is required. 
 + Add the server name that you defined in the nginx configuration to /etc/hosts (e.g. `127.0.0.1 opendialog.test` )
-+ Withing the `opendialog-dev-environment` directory copy `env.example` to `.env`.
++ Within the `opendialog-dev-environment` directory copy `env.example` to `.env`.
 + In `.env`, change the `DATA_PATH_HOST` to `DATA_PATH_HOST=~/.laradock/opendialog/data` - this ensures that each application will have its own data directory so data will not be shared between multiple installations of OpenDialog apps. 
 + Modify COMPOSE_PROJECT_NAME to match `opendialog` (or your own app name) - this ensures that you are using different containers for each OpenDialog application.
 + In your copy of `.env` you can set `CHOSEN_DATABASE` to be `mysql` or `postgres`. This will affect which images are spun up by the scripts.
