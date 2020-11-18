@@ -63,29 +63,23 @@ You are now ready to setup OpenDialog itself.
 
 ## Setting up OpenDialog
 
-+ Connect to the workspace container as described above and run the following commands to set the application up:
++ Connect to the workspace container as described above and run the following commands through that container to set the application up:
 
 in `/var/www/opendialog`:
 
 * run `composer install`
 * run `cp .env.example .env; php artisan key:generate;`
+* in `.env` ensure that `FORCE_HTTPS=false` is set to false as the dev setup does not use certificates currently
 * Edit .env file and configure the app name, URL and DB settings
     * Use the database credentials you defined above.
     * Use 'mysql' for MySQL host
     * Use `dgraph-server` for the DGraph host
 * run `php artisan migrate` to setup tables
 * run `php artisan user:create` to create a user
-* run `bash update-web-chat.sh -iy` to build the webchat widget for interacting with the bot
 * run `php artisan webchat:setup` to setup default values for webchat
 * run `php artisan conversations:setup` to setup default conversations
 * run `yarn install` and `yarn run dev` to setup the admin interface
-* In `opendialog\app\Http\Middleware\VerifyCsrfToken` add the following URLs to be excluded from CSRF token matching.
-```    
-protected $except = [
-    '/incoming/webchat',
-    'webchat-config'
-];
-```
+
 
 ### Confirm OpenDialog works
 
