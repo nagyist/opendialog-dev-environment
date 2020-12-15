@@ -77,13 +77,18 @@ in `/var/www/opendialog`:
 * run `php artisan migrate` to setup tables
 * run `php artisan user:create` to create a user
 * run `php artisan webchat:setup` to setup default values for webchat
-* run `php artisan conversations:setup` to setup default conversations
+* run `php artisan schema:init` to setup the Dgraph schema
+* run `php artisan specification:import` to import the existing conversations, messages and intents
 * run `yarn install` and `yarn run dev` to setup the admin interface
 
 
 ### Confirm OpenDialog works
 
-To ensure that it is all working visit http://opendialog.test, you should see the OpenDialog welcome screen and be able to login with the user you created. If you visit http://opendialog.test/admin/demo the bot should load in the page and give you the default welcome message.
+To ensure that it is all working visit http://opendialog.test, you should see the OpenDialog welcome screen and be able to login with the user you created. 
+
+Visit http://opendialog.test/admin/conversations and activate the imported conversations. 
+
+Finally, if you visit http://opendialog.test/admin/demo the bot should load in the page and give you the default welcome message.
 
 ### Confirm Dgraph works
 
