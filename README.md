@@ -55,7 +55,8 @@ To run just the required containers, run
     `bash scripts/start.sh`
 
 To connect to the workspace container to run scripts use:
-`bash scripts/ssh-workspace`
+
+    `bash scripts/ssh-workspace.sh`
 
 This will start up the workspace container for you to work in and then close it when you exit
 
@@ -78,7 +79,7 @@ in `/var/www/opendialog`:
 * run `php artisan user:create` to create a user
 * run `php artisan webchat:setup` to setup default values for webchat
 * run `php artisan schema:init` to setup the Dgraph schema
-* run `php artisan specification:import` to import the existing conversations, messages and intents
+* run `php artisan specification:import -y -a` to import and activate the existing conversations, messages and intents
 * run `yarn install` and `yarn run dev` to setup the admin interface
 
 
@@ -86,7 +87,7 @@ in `/var/www/opendialog`:
 
 To ensure that it is all working visit http://opendialog.test, you should see the OpenDialog welcome screen and be able to login with the user you created. 
 
-Visit http://opendialog.test/admin/conversations and activate the imported conversations. 
+Visit http://opendialog.test/admin/conversations and ensure that the imported conversations are there and activated. 
 
 Finally, if you visit http://opendialog.test/admin/demo the bot should load in the page and give you the default welcome message.
 
