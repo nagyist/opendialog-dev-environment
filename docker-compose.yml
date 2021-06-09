@@ -302,7 +302,7 @@ services:
       links:
         - dgraph-server
       networks:
-        - backend       
+        - backend
 
     dgraph-server:
       image: dgraph/dgraph:${DGRAPH_VERSION}
@@ -319,7 +319,7 @@ services:
   ### Dgraph used for testing ################################################
     dgraph-zero-test:
       image: dgraph/dgraph:${DGRAPH_VERSION}
-      command: dgraph zero --my=dgraph-zero-test:5082
+      command: dgraph zero --my=dgraph-zero-test:5082 -o=2
       links:
         - dgraph-server
       networks:
@@ -327,6 +327,6 @@ services:
 
     dgraph-server-test:
       image: dgraph/dgraph:${DGRAPH_VERSION}
-      command: dgraph alpha --security token=dgraphtestservertoken --security whitelist=0.0.0.0/0 --my=dgraph-server-test:7082 --zero=dgraph-zero-test:5082
+      command: dgraph alpha --security token=dgraphtestservertoken --security whitelist=0.0.0.0/0 --my=dgraph-server-test:7082 --zero=dgraph-zero-test:5082 -o=2
       networks:
         - backend
