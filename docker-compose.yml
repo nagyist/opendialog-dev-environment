@@ -318,7 +318,7 @@ services:
 
   ### Dgraph UI to inspect Dgraph data ################################################
     ratel:
-      image: dgraph/ratel:${DGRAPH_VERSION}
+      image: dgraph/ratel:${DGRAPH_RATEL_VERSION}
       ports:
         - 9001:8000
       command: dgraph-ratel
