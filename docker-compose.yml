@@ -316,6 +316,15 @@ services:
       networks:
         - backend
 
+  ### Dgraph UI to inspect Dgraph data ################################################
+    ratel:
+      image: dgraph/ratel:${DGRAPH_RATEL_VERSION}
+      ports:
+        - 9001:8000
+      command: dgraph-ratel
+      networks:
+        - backend
+
   ### Dgraph used for testing ################################################
     dgraph-zero-test:
       image: dgraph/dgraph:${DGRAPH_VERSION}
