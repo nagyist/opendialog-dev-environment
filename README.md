@@ -12,7 +12,6 @@ To deploy OpenDialog using this package run through the following steps:
 
 + Create a directory called `od-app` (or whatever you prefer to call it, ensuring that any references of od-app in the documentation that follows is replaced by the name you chose).
 
-
 + Clone the OpenDialog [application](https://github.com/opendialogai/opendialog) in a directory called `opendialog` (or your own app name) within od-app.
 
 `git clone git@github.com:opendialogai/opendialog.git opendialog`
@@ -77,9 +76,9 @@ in `/var/www/opendialog`:
     * Use `dgraph-server` for the DGraph host
 * run `php artisan migrate` to setup tables
 * run `php artisan user:create` to create a user
+* run `php artisan schema:init` to setup the Dgraph schema
 * run `php artisan configurations:create` to create the default component configurations
 * run `php artisan webchat:setup` to setup default values for webchat
-* run `php artisan schema:init` to setup the Dgraph schema
 * run `yarn install` and `yarn run dev` to setup the admin interface
 
 
@@ -93,16 +92,18 @@ Finally, if you visit http://opendialog.test/admin/demo the bot should load in t
 
 ### Confirm Dgraph works
 
-To ensure that Dgraph is working visit http://opendialog.test:9001/?latest and point it to http://opendialog.test:8080
+To ensure that Dgraph is working visit http://opendialog.test:9001/?latest (making sure first that the ratel docker image is running) and point it to http://opendialog.test:8080
 
 You should be able to use the console to run queries such as:
 
-``{
-  node(func: eq(ei_type,"conversation_template")) {
-    uid
-    expand(_all_)
-  }
-}``
+```
+{
+    scenario(func: has(name)) {
+        uid
+        name
+    }
+}
+```
 
 ## Bundled Scripts
 
@@ -116,14 +117,13 @@ A brief description of each:
 * `ssh-nginx.sh` - SSH to the nginx container
 * `ssh-workspace.sh` - SSH to the Workspace container
 * `start.sh` - Starts only the containers needed to run the app. Will not start workspace or test containers
+* `start-ratel.sh` - Starts only the ratel container
 * `start-test-containers.sh` - Starts the containers needed for running tests
 * `start-workspace.sh` - Starts only the workspace and related containers
 * `stop-test-containers.sh` - Stops all test containers
 * `stop-workspace.sh` - Stops the workspace container 
-* `up-with-rebuild.sh` - Spins rebuilds and starts the core containers 
-* `update-conversations.sh` - Makes sure the right containers are running and installs the newest OD conversations
+* `up-with-rebuild.sh` - Spins rebuilds and starts the core containers
 * `update-opendialog.sh` - Installs the latest composer and node requirements on the project as well as the webchat component
-* `update-webchat-settings.sh` - Updates the webchat settings based on the artisan command
 
 ## Automated testing
 
