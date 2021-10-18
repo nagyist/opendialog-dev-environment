@@ -120,6 +120,7 @@ A brief description of each:
 * `start-ratel.sh` - Starts only the ratel container
 * `start-test-containers.sh` - Starts the containers needed for running tests
 * `start-workspace.sh` - Starts only the workspace and related containers
+* `stop.sh` - Stops all running Docker containers
 * `stop-test-containers.sh` - Stops all test containers
 * `stop-workspace.sh` - Stops the workspace container 
 * `up-with-rebuild.sh` - Spins rebuilds and starts the core containers
@@ -150,7 +151,7 @@ You can spin up the required containers, login to the workspace environment and 
 - Open the .env file, search for `WORKSPACE_INSTALL_XDEBUG` and set it to `true`
 - Still in .env, search for `PHP_FPM_INSTALL_XDEBUG` and set that to `true`
 - Rebuild the containers with `docker-compose build workspace php-fpm`
-
+- Make sure that xdebug is running on the `php-fpm` container by running `./php-fpm xdebug start`
 
 ## Configuring PHPStorm
 
@@ -167,6 +168,10 @@ The OpenDialog team is primarily on PhpStorm but these instructions should give 
 - Make sure that "Use Composer Autoloader" is selected and add `/var/www/opendialog/vendor/autoload.php` as the path to script.
 - Hit Refresh next to the "Path to Script" field. If it correctly identifies the PHPUnit version installed you should be good to go. 
 
+## Connecting to the Database
+
+You should be able to connect to the MySQL database from your local machine on port `3306`.
+The credentials need to match what is in the `.env` file.
 
 ## Working on OpenDialog Core
 
