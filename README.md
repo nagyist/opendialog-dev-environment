@@ -78,7 +78,7 @@ in `/var/www/opendialog`:
 * run `php artisan user:create` to create a user
 * run `php artisan schema:init` to setup the Dgraph schema
 * run `php artisan configurations:create` to create the default component configurations
-* run `php artisan webchat:settings` to setup webchat interface setting content
+* run `php artisan component:settings` to setup webchat interface setting content
 * run `yarn install` and `yarn run dev` to setup the admin interface
 
 
