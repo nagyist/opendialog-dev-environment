@@ -23,6 +23,9 @@ ARG LARADOCK_PHP_VERSION
 # Set Environment Variables
 ENV DEBIAN_FRONTEND noninteractive
 
+# Fix the PHP version
+RUN update-alternatives --set php /usr/bin/php${LARADOCK_PHP_VERSION}
+
 # If you're in China, or you need to change sources, will be set CHANGE_SOURCE to true in .env.
 
 ARG CHANGE_SOURCE=false
