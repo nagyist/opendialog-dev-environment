@@ -314,7 +314,7 @@ services:
         - 8080:8080
         - 9080:9080
       restart: on-failure
-      command: dgraph alpha --security token=${DGRAPH_AUTH_TOKEN};whitelist=0.0.0.0/0 --my=dgraph-server:7080 --zero=dgraph-zero:5080
+      command: dgraph alpha --security "token=${DGRAPH_AUTH_TOKEN};whitelist=0.0.0.0/0" --my=dgraph-server:7080 --zero=dgraph-zero:5080
       networks:
         - backend
 
@@ -338,6 +338,6 @@ services:
 
     dgraph-server-test:
       image: dgraph/dgraph:${DGRAPH_VERSION}
-      command: dgraph alpha --security token=dgraphtestservertoken;whitelist=0.0.0.0/0 --my=dgraph-server-test:7082 --zero=dgraph-zero-test:5082 -o=2
+      command: dgraph alpha --security "token=dgraphtestservertoken;whitelist=0.0.0.0/0" --my=dgraph-server-test:7082 --zero=dgraph-zero-test:5082 -o=2
       networks:
         - backend
