@@ -15,6 +15,8 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   dgraph:
     driver: ${VOLUMES_DRIVER}
+  redis:
+    driver: ${VOLUMES_DRIVER}
 
 services:
 
@@ -265,6 +267,16 @@ services:
         - POSTGRES_CONFLUENCE_DB=${CONFLUENCE_POSTGRES_DB}
         - POSTGRES_CONFLUENCE_USER=${CONFLUENCE_POSTGRES_USER}
         - POSTGRES_CONFLUENCE_PASSWORD=${CONFLUENCE_POSTGRES_PASSWORD}
+      networks:
+        - backend
+
+### Redis ################################################
+    redis:
+      build: ./redis
+      volumes:
+        - ${DATA_PATH_HOST}/redis:/data
+      ports:
+        - "${REDIS_PORT}:6379"
       networks:
         - backend
 
