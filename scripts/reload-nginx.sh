@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd ${DIR}/..
+source ./scripts/init.sh
 
 echo "### Reloading NGINX ###"
-docker-compose up -d nginx
-docker-compose exec nginx nginx -s reload
+docker-compose -f ${COMPOSE_FILE}  up -d nginx
+docker-compose -f ${COMPOSE_FILE}  exec nginx nginx -s reload

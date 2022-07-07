@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd ${DIR}/..
+source ./scripts/init.sh
 
 echo "### Starting only the required containers ###"
-docker-compose up -d workspace
-docker-compose exec workspace bash
+docker-compose -f ${COMPOSE_FILE} up -d workspace
+docker-compose -f ${COMPOSE_FILE} exec workspace bash
 
 bash scripts/stop-workspace.sh

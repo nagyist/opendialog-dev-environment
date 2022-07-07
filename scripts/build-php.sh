@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd ${DIR}/..
+source ./scripts/init.sh
 
 echo "### Rebuilding containers that use PHP ###"
-docker-compose build workspace php-fpm
+docker-compose -f ${COMPOSE_FILE} build workspace php-fpm

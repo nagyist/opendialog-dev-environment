@@ -1,0 +1,174 @@
+version: '3.2'
+
+networks:
+  frontend:
+    driver: ${NETWORKS_DRIVER}
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+volumes:
+  mysql:
+    driver: ${VOLUMES_DRIVER}
+  memcached:
+    driver: ${VOLUMES_DRIVER}
+  postgres:
+    driver: ${VOLUMES_DRIVER}
+  dgraph:
+    driver: ${VOLUMES_DRIVER}
+  redis:
+    driver: ${VOLUMES_DRIVER}
+
+services:
+
+  ### Workspace Utilities ##################################
+  workspace:
+    image: greenshootlabs/dev-env_workspace:latest
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "${WORKSPACE_SSH_PORT}:22"
+      - "6006:6006"
+    tty: true
+    environment:
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      - DOCKER_HOST=tcp://docker-in-docker:2375
+    networks:
+      - frontend
+      - backend
+    links:
+      - docker-in-docker
+
+  ### PHP-FPM ##############################################
+  php-fpm:
+    image: greenshootlabs/dev-env_php-fpm:latest
+    volumes:
+      - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+    expose:
+      - "9000"
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+      - "host.docker.internal:host-gateway"
+    environment:
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+      - DOCKER_HOST=tcp://docker-in-docker:2375
+      - FAKETIME=${PHP_FPM_FAKETIME}
+    depends_on:
+      - workspace
+    networks:
+      - backend
+    links:
+      - docker-in-docker
+
+  ### NGINX Server #########################################
+  nginx:
+    image: greenshootlabs/dev-env_nginx:latest
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
+      - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
+      - ${NGINX_SITES_PATH}:/etc/nginx/sites-available
+      - ${NGINX_SSL_PATH}:/etc/nginx/ssl
+    ports:
+      - "${NGINX_HOST_HTTP_PORT}:80"
+      - "${NGINX_HOST_HTTPS_PORT}:443"
+    depends_on:
+      - php-fpm
+    networks:
+      - frontend
+      - backend
+
+  ### MySQL ################################################
+  mysql:
+    image: greenshootlabs/dev-env_mysql:latest
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${WORKSPACE_TIMEZONE}
+    volumes:
+      - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
+      - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+    ports:
+      - "${MYSQL_PORT}:3306"
+    networks:
+      - backend
+      - frontend
+
+  ### Memcached ############################################
+  memcached:
+    image: greenshootlabs/dev-env_memcached:latest
+    volumes:
+      - ${DATA_PATH_HOST}/memcached:/var/lib/memcached
+    ports:
+      - "${MEMCACHED_HOST_PORT}:11211"
+    depends_on:
+      - php-fpm
+    networks:
+      - backend
+
+  ### Redis ################################################
+  redis:
+    image: greenshootlabs/dev-env_redis:latest
+    volumes:
+      - ${DATA_PATH_HOST}/redis:/data
+    ports:
+      - "${REDIS_PORT}:6379"
+    networks:
+      - backend
+
+  ### Docker-in-Docker ################################################
+  docker-in-docker:
+    image: docker:dind
+    privileged: true
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+    expose:
+      - 2375
+    networks:
+      - backend
+
+  ### DGraph for use by app ################################################
+  dgraph-zero:
+    image: dgraph/dgraph:${DGRAPH_VERSION}
+    volumes:
+      - ${DATA_PATH_HOST}/dgraph/zero:/dgraph
+    ports:
+      - 5080:5080
+      - 6080:6080
+    restart: on-failure
+    command: dgraph zero --my=dgraph-zero:5080
+    links:
+      - dgraph-server
+    networks:
+      - backend
+
+  dgraph-server:
+    image: dgraph/dgraph:${DGRAPH_VERSION}
+    volumes:
+      - ${DATA_PATH_HOST}/dgraph/server:/dgraph
+    ports:
+      - 8080:8080
+      - 9080:9080
+    restart: on-failure
+    command: dgraph alpha --security "token=${DGRAPH_AUTH_TOKEN};whitelist=0.0.0.0/0" --my=dgraph-server:7080 --zero=dgraph-zero:5080
+    networks:
+      - backend
+
+  ### Dgraph used for testing ################################################
+  dgraph-zero-test:
+    image: dgraph/dgraph:${DGRAPH_VERSION}
+    command: dgraph zero --my=dgraph-zero-test:5082 -o=2
+    links:
+      - dgraph-server
+    networks:
+      - backend
+
+  dgraph-server-test:
+    image: dgraph/dgraph:${DGRAPH_VERSION}
+    command: dgraph alpha --security token=${DGRAPH_AUTH_TOKEN} --security whitelist=0.0.0.0/0 --my=dgraph-server-test:7082 --zero=dgraph-zero-test:5082 -o=2
+    networks:
+      - backend

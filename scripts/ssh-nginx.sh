@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd ${DIR}/..
+source ./scripts/init.sh
 
 echo "### SSH to nginx ###"
-docker-compose up -d nginx
-docker-compose exec nginx bash
+docker-compose -f ${COMPOSE_FILE} up -d nginx
+docker-compose -f ${COMPOSE_FILE} exec nginx bash
