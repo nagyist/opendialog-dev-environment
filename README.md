@@ -213,8 +213,17 @@ Now every commit you make will trigger php codesniffer to run. If there is a pro
 of the code, the script will echo the output of php codesniffer. If there are no issues, the commit will
 go into git.
 
-
-
-
-
-
+## Testing Emails
+This package comes with a [MailHog](https://github.com/mailhog/MailHog) docker container. You can set it up
+locally using the following parameters in your `.env` file:
+```
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="test-email@opendialog.ai"
+MAIL_FROM_NAME="OpenDialog"
+```
+You can view sent emails in MailHog's web interface on: ```http://localhost:8025/```
