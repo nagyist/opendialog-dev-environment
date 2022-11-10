@@ -339,6 +339,16 @@ services:
       networks:
         - backend
 
+  ### Mailhog ################################################
+    mailhog:
+      build: ./mailhog
+      ports:
+          - "1025:1025"
+          - "8025:8025"
+      networks:
+          - frontend
+          - backend
+
   ### Dgraph used for testing ################################################
     dgraph-zero-test:
       image: dgraph/dgraph:${DGRAPH_VERSION}
