@@ -158,6 +158,16 @@ services:
     networks:
       - backend
 
+  ### Mailhog ################################################
+  mailhog:
+    image: greenshootlabs/dev-env_mailhog:latest
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - frontend
+      - backend
+
   ### Dgraph used for testing ################################################
   dgraph-zero-test:
     image: dgraph/dgraph:${DGRAPH_VERSION}
