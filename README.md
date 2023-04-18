@@ -41,15 +41,7 @@ To deploy OpenDialog using this package run through the following steps:
 
 ### Starting up the environment
 
-From within opendialog-dev-environment start all the containers with:
-    
-    `docker-compose up -d`
-
-Please note that if you have another OpenDialog application (or other Docker containers in general) up and running you may need to stop those containers in order to avoid port clashing.     
-    
-`docker-compose up -d` will start all containers including `workspace`,  `dgraph ratel`, `dgraph-zero-test` and `dgraph-server-test` which are not needed to just test an application. 
-
-To run just the required containers, run
+From within opendialog-dev-environment, run
 
     `bash scripts/start.sh`
 
